@@ -58,6 +58,23 @@
   margin-bottom: 18rpx;
 }
 
+.birthday-mini-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  padding: 24rpx 26rpx;
+  margin-bottom: 14rpx;
+}
+
+.mini-name {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.mini-sub {
+  font-size: 24rpx;
+}
+
 .quick-row {
   display: flex;
   gap: 18rpx;

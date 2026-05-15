@@ -28,8 +28,18 @@
     <view class="tag">提醒</view>
   </view>
 
-  <view class="card empty-card">
+  <view wx:if="{{todayList.length === 0}}" class="card empty-card">
     <view class="muted">今天还没有生日提醒。</view>
+  </view>
+  <view
+    wx:for="{{todayList}}"
+    wx:key="id"
+    class="card birthday-mini-card"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
+  >
+    <view class="mini-name">{{item.name}}</view>
+    <view class="muted mini-sub">{{item.relation}} · 今天生日</view>
   </view>
 
   <view class="section-head">
@@ -37,8 +47,18 @@
     <button class="btn-soft small-btn" bindtap="goList">查看全部</button>
   </view>
 
-  <view class="card empty-card">
+  <view wx:if="{{upcomingList.length === 0}}" class="card empty-card">
     <view class="muted">最近还没有可展示的生日提醒。</view>
+  </view>
+  <view
+    wx:for="{{upcomingList}}"
+    wx:key="id"
+    class="card birthday-mini-card"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
+  >
+    <view class="mini-name">{{item.name}}</view>
+    <view class="muted mini-sub">{{item.relation}} · 还有 {{item.daysUntil}} 天</view>
   </view>
 
   <view class="quick-row">

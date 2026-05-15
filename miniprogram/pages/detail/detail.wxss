@@ -32,6 +32,10 @@
   border-bottom: 1rpx solid #f3e5db;
 }
 
+.info-row-last {
+  border-bottom: none;
+}
+
 .info-row-top {
   align-items: flex-start;
 }
@@ -47,6 +51,11 @@
   line-height: 1.7;
 }
 
+.blessing-card {
+  padding: 26rpx;
+  margin-bottom: 22rpx;
+}
+
 .blessing-title {
   margin-bottom: 18rpx;
 }
@@ -60,6 +69,7 @@
 .action-row {
   display: flex;
   gap: 18rpx;
+  margin-bottom: 40rpx;
 }
 
 .action-half {
@@ -69,4 +79,10 @@
 .action-btn::after,
 .action-half::after {
   border: none;
+}
+
+.btn-danger {
+  background: #fde8e4;
+  color: #d95f4e;
+  border-radius: 999rpx;
 }

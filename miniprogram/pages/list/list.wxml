@@ -19,6 +19,8 @@
     wx:for="{{displayList}}"
     wx:key="id"
     class="card birthday-card"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
   >
     <view class="birthday-top">
       <view>
