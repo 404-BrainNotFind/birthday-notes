@@ -1,0 +1,30 @@
+<view class="page-shell" wx:if="{{record}}">
+  <view class="card hero-card">
+    <view class="hero-name">{{record.name}}</view>
+    <view class="muted hero-sub">{{record.relation}} · {{record.birthdayText}}</view>
+    <view class="hero-status">{{record.statusText}}</view>
+  </view>
+
+  <view class="card detail-card">
+    <view class="info-row">
+      <view class="info-label">生日日期</view>
+      <view>{{record.birthdayText}}</view>
+    </view>
+    <view class="info-row">
+      <view class="info-label">提醒设置</view>
+      <view>提前 {{record.remindDays}} 天</view>
+    </view>
+    <view class="info-row">
+      <view class="info-label">联系方式</view>
+      <view>{{record.contact || '未填写'}}</view>
+    </view>
+    <view class="info-row info-row-top">
+      <view class="info-label">备注</view>
+      <view class="info-value-multi">{{record.note || '未填写'}}</view>
+    </view>
+    <view class="info-row">
+      <view class="info-label">创建时间</view>
+      <view>{{record.createTime}}</view>
+    </view>
+  </view>
+</view>

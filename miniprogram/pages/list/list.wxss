@@ -1,0 +1,51 @@
+.filter-row {
+  display: flex;
+  gap: 16rpx;
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin-bottom: 22rpx;
+}
+
+.filter-chip {
+  display: inline-flex;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: #f8ebe2;
+  color: #7d6055;
+  font-size: 24rpx;
+}
+
+.filter-chip-active {
+  background: #d95f4e;
+  color: #ffffff;
+}
+
+.birthday-card,
+.empty-card {
+  padding: 26rpx;
+  margin-bottom: 18rpx;
+}
+
+.birthday-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18rpx;
+}
+
+.birthday-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.status-text {
+  color: #d95f4e;
+  font-weight: 700;
+}
+
+.birthday-note {
+  margin-top: 16rpx;
+  line-height: 1.6;
+  color: #5f4b44;
+}

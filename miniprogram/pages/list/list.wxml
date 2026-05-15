@@ -1,0 +1,32 @@
+<view class="page-shell">
+  <view class="filter-row">
+    <view
+      wx:for="{{filterOptions}}"
+      wx:key="*this"
+      class="filter-chip {{activeFilter === item ? 'filter-chip-active' : ''}}"
+      data-value="{{item}}"
+      bindtap="selectFilter"
+    >
+      {{item}}
+    </view>
+  </view>
+
+  <view wx:if="{{displayList.length === 0}}" class="card empty-card">
+    <view class="muted">这个分类下还没有生日记录。</view>
+  </view>
+
+  <view
+    wx:for="{{displayList}}"
+    wx:key="id"
+    class="card birthday-card"
+  >
+    <view class="birthday-top">
+      <view>
+        <view class="birthday-name">{{item.name}}</view>
+        <view class="muted">{{item.relation}} · {{item.birthdayText}}</view>
+      </view>
+      <view class="status-text">{{item.statusText}}</view>
+    </view>
+    <view class="birthday-note">{{item.note || '还没有填写备注。'}}</view>
+  </view>
+</view>

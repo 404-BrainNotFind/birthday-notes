@@ -1,0 +1,72 @@
+.hero-card,
+.detail-card {
+  padding: 30rpx;
+  margin-bottom: 22rpx;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #fff0e4, #ffe1d8);
+}
+
+.hero-name {
+  font-size: 44rpx;
+  font-weight: 800;
+  margin-bottom: 10rpx;
+}
+
+.hero-sub {
+  margin-bottom: 14rpx;
+}
+
+.hero-status {
+  color: #d95f4e;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f3e5db;
+}
+
+.info-row-top {
+  align-items: flex-start;
+}
+
+.info-label {
+  color: #8e6f63;
+  min-width: 140rpx;
+}
+
+.info-value-multi {
+  flex: 1;
+  text-align: right;
+  line-height: 1.7;
+}
+
+.blessing-title {
+  margin-bottom: 18rpx;
+}
+
+.blessing-text {
+  line-height: 1.8;
+  color: #5c4941;
+  margin-bottom: 20rpx;
+}
+
+.action-row {
+  display: flex;
+  gap: 18rpx;
+}
+
+.action-half {
+  flex: 1;
+}
+
+.action-btn::after,
+.action-half::after {
+  border: none;
+}

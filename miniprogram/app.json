@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/add/add",
+    "pages/list/list",
+    "pages/detail/detail"
+  ],
+  "window": {
+    "navigationBarTitleText": "生日小记",
+    "navigationBarBackgroundColor": "#fff6ef",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fff8f2",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#8e6f63",
+    "selectedColor": "#d95f4e",
+    "backgroundColor": "#fffdf9",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/add/add",
+        "text": "添加"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "text": "生日簿"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

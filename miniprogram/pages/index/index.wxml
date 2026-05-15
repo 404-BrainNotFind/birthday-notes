@@ -1,0 +1,48 @@
+<view class="page-shell">
+  <view class="hero card">
+    <view class="hero-title">别忘了重要的人</view>
+    <view class="muted hero-desc">记录好友生日，提前准备祝福和心意。</view>
+  </view>
+
+  <view class="stats-grid">
+    <view class="card stat-card">
+      <view class="stat-num">{{stats.totalCount}}</view>
+      <view class="muted">已记录人数</view>
+    </view>
+    <view class="card stat-card">
+      <view class="stat-num">{{stats.todayCount}}</view>
+      <view class="muted">今日生日</view>
+    </view>
+    <view class="card stat-card">
+      <view class="stat-num">{{stats.within7Count}}</view>
+      <view class="muted">7天内生日</view>
+    </view>
+    <view class="card stat-card">
+      <view class="stat-num">{{stats.monthCount}}</view>
+      <view class="muted">本月生日</view>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">今日生日</view>
+    <view class="tag">提醒</view>
+  </view>
+
+  <view class="card empty-card">
+    <view class="muted">今天还没有生日提醒。</view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">近期生日</view>
+    <button class="btn-soft small-btn" bindtap="goList">查看全部</button>
+  </view>
+
+  <view class="card empty-card">
+    <view class="muted">最近还没有可展示的生日提醒。</view>
+  </view>
+
+  <view class="quick-row">
+    <button class="btn-main quick-btn" bindtap="goAdd">添加生日</button>
+    <button class="btn-soft quick-btn" bindtap="goList">查看生日簿</button>
+  </view>
+</view>

@@ -1,0 +1,85 @@
+<view class="page-shell">
+  <view class="card intro-card">
+    <view class="section-title">{{pageTitle}}</view>
+    <view class="muted intro-text">先把生日记录下来，方便后续统一查看和整理。</view>
+  </view>
+
+  <view class="card form-card">
+    <view class="field">
+      <view class="label">姓名 / 称呼</view>
+      <input
+        class="input"
+        placeholder="例如：小王"
+        placeholder-class="input-placeholder"
+        value="{{form.name}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">关系标签</view>
+      <picker mode="selector" range="{{relationOptions}}" value="{{relationIndex}}" bindchange="onRelationChange">
+        <view class="picker-field">
+          <view>{{form.relation}}</view>
+          <view class="picker-arrow">请选择</view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="field-row">
+      <view class="field half">
+        <view class="label">月份</view>
+        <picker mode="selector" range="{{monthOptions}}" value="{{monthIndex}}" bindchange="onMonthChange">
+          <view class="picker-field">
+            <view>{{form.month}} 月</view>
+            <view class="picker-arrow">选择</view>
+          </view>
+        </picker>
+      </view>
+      <view class="field half">
+        <view class="label">日期</view>
+        <picker mode="selector" range="{{dayOptions}}" value="{{dayIndex}}" bindchange="onDayChange">
+          <view class="picker-field">
+            <view>{{form.day}} 日</view>
+            <view class="picker-arrow">选择</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">提前提醒天数</view>
+      <picker mode="selector" range="{{remindOptions}}" value="{{remindIndex}}" bindchange="onRemindChange">
+        <view class="picker-field">
+          <view>提前 {{form.remindDays}} 天</view>
+          <view class="picker-arrow">请选择</view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">联系方式</view>
+      <input
+        class="input"
+        placeholder="可选，微信号或手机号"
+        placeholder-class="input-placeholder"
+        value="{{form.contact}}"
+        bindinput="onContactInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">备注</view>
+      <textarea
+        class="textarea"
+        placeholder="可选，例如喜欢什么礼物"
+        placeholder-class="input-placeholder"
+        value="{{form.note}}"
+        bindinput="onNoteInput"
+        maxlength="200"
+      />
+    </view>
+
+    <button class="btn-main submit-btn" bindtap="submitForm">{{form.id ? '保存修改' : '确认添加'}}</button>
+  </view>
+</view>
