@@ -9,6 +9,7 @@ Page({
   data: {
     items: [],
     loading: true,
+    demoLoading: false,
   },
 
   onShow() {
@@ -22,16 +23,24 @@ Page({
       wx.showToast({ title: '请先开通云开发', icon: 'none' })
       return
     }
+    const token = getToken()
+    console.log('[收件箱] 使用 token =', token)
     wx.cloud.callFunction({
       name: 'getInboxItems',
-      data: { token: getToken() },
+      data: { token },
       success: (res) => {
+        console.log('[收件箱] 云函数返回', res.result)
         const items = Array.isArray(res.result) ? res.result : []
         this.setData({ items, loading: false })
       },
-      fail: () => {
+      fail: (err) => {
+        console.error('[收件箱] 调用失败', err)
         this.setData({ loading: false })
-        wx.showToast({ title: '加载失败', icon: 'none' })
+        wx.showModal({
+          title: '加载失败',
+          content: String(err && err.errMsg || err),
+          showCancel: false,
+        })
       },
     })
   },
@@ -73,6 +82,28 @@ Page({
       confirmColor: '#8e6f63',
       success: (res) => {
         if (res.confirm) this.markImported(id)
+      },
+    })
+  },
+
+  insertTestData() {
+    const token = getToken()
+    this.setData({ demoLoading: true })
+    const names = ['张三', '李四', '王五']
+    const name = names[Math.floor(Math.random() * names.length)]
+    const month = Math.floor(Math.random() * 12) + 1
+    const day = Math.floor(Math.random() * 28) + 1
+    wx.cloud.callFunction({
+      name: 'submitInvitation',
+      data: { inviterToken: token, name, month, day, contact: '', note: '演示数据' },
+      success: () => {
+        this.setData({ demoLoading: false })
+        this.loadItems()
+      },
+      fail: (err) => {
+        this.setData({ demoLoading: false })
+        wx.showToast({ title: '插入失败', icon: 'none' })
+        console.error(err)
       },
     })
   },

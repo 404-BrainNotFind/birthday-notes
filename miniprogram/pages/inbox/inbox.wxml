@@ -6,6 +6,7 @@
     <view class="empty-icon">📭</view>
     <view class="empty-title">收件箱是空的</view>
     <view class="muted empty-desc">邀请好友填写生日后，收到的信息会显示在这里</view>
+    <button class="btn-soft demo-btn" bindtap="insertTestData" loading="{{demoLoading}}">插入测试数据（演示用）</button>
   </view>
 
   <block wx:else>
