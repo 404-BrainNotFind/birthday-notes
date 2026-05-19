@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/add/add",
     "pages/list/list",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/invite/invite",
+    "pages/inbox/inbox"
   ],
   "window": {
     "navigationBarTitleText": "生日小记",

@@ -1,0 +1,69 @@
+.center-tip {
+  text-align: center;
+  padding: 80rpx 0;
+  font-size: 28rpx;
+}
+
+.empty-card {
+  padding: 60rpx 28rpx;
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.hint {
+  font-size: 24rpx;
+  margin-bottom: 18rpx;
+}
+
+.inbox-card {
+  padding: 28rpx;
+  margin-bottom: 18rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.inbox-name {
+  font-size: 34rpx;
+  font-weight: 800;
+  color: #3d302c;
+}
+
+.inbox-birthday,
+.inbox-contact,
+.inbox-note {
+  font-size: 26rpx;
+}
+
+.inbox-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+
+.inbox-btn {
+  flex: 1;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 26rpx;
+}
+
+.inbox-btn::after {
+  border: none;
+}

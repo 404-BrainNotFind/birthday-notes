@@ -1,41 +1,134 @@
 <view class="page-shell" wx:if="{{record}}">
+
+  <!-- 生日当天横幅 -->
+  <view class="birthday-banner" wx:if="{{record.isToday}}">
+    <text>🎂 今天是 {{record.name}} 的生日！记得送上祝福和心意 🎁</text>
+  </view>
+
+  <!-- 顶部信息卡 -->
   <view class="card hero-card">
     <view class="hero-name">{{record.name}}</view>
     <view class="muted hero-sub">{{record.relation}} · {{record.birthdayText}}</view>
     <view class="hero-status">{{record.statusText}}</view>
   </view>
 
-  <view class="card detail-card">
-    <view class="info-row">
-      <view class="info-label">生日日期</view>
-      <view>{{record.birthdayText}}</view>
-    </view>
-    <view class="info-row">
-      <view class="info-label">提醒设置</view>
-      <view>提前 {{record.remindDays}} 天</view>
-    </view>
-    <view class="info-row">
-      <view class="info-label">联系方式</view>
-      <view>{{record.contact || '未填写'}}</view>
-    </view>
-    <view class="info-row info-row-top">
-      <view class="info-label">备注</view>
-      <view class="info-value-multi">{{record.note || '未填写'}}</view>
-    </view>
-    <view class="info-row info-row-last">
-      <view class="info-label">创建时间</view>
-      <view>{{record.createTime}}</view>
-    </view>
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'info' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="info">基本信息</view>
+    <view class="tab-item {{activeTab === 'gifts' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="gifts">礼物 &amp; 心愿</view>
   </view>
 
-  <view class="card blessing-card">
-    <view class="blessing-title section-title">祝福语</view>
-    <view class="blessing-text">{{record.blessingText}}</view>
-    <button class="btn-soft action-btn" bindtap="copyBlessing">复制祝福语</button>
-  </view>
+  <!-- Tab：基本信息 -->
+  <block wx:if="{{activeTab === 'info'}}">
+    <view class="card detail-card">
+      <view class="info-row">
+        <view class="info-label">生日日期</view>
+        <view>{{record.birthdayText}}</view>
+      </view>
+      <view class="info-row">
+        <view class="info-label">提醒设置</view>
+        <view>提前 {{record.remindDays}} 天</view>
+      </view>
+      <view class="info-row">
+        <view class="info-label">联系方式</view>
+        <view>{{record.contact || '未填写'}}</view>
+      </view>
+      <view class="info-row info-row-top">
+        <view class="info-label">备注</view>
+        <view class="info-value-multi">{{record.note || '未填写'}}</view>
+      </view>
+      <view class="info-row info-row-last">
+        <view class="info-label">创建时间</view>
+        <view>{{record.createTime}}</view>
+      </view>
+    </view>
 
+    <view class="card blessing-card">
+      <view class="blessing-title section-title">祝福语</view>
+      <view class="blessing-text">{{record.blessingText}}</view>
+      <button class="btn-soft action-btn" bindtap="copyBlessing">复制祝福语</button>
+    </view>
+  </block>
+
+  <!-- Tab：礼物 & 心愿 -->
+  <block wx:if="{{activeTab === 'gifts'}}">
+
+    <!-- 礼物记录 -->
+    <view class="card section-card">
+      <view class="section-header">
+        <view class="section-title">礼物记录</view>
+        <view class="add-link" bindtap="toggleAddGift">{{showAddGift ? '收起' : '+ 添加'}}</view>
+      </view>
+
+      <view class="inline-form" wx:if="{{showAddGift}}">
+        <view class="form-row-group">
+          <view class="form-label">年份</view>
+          <picker mode="selector" range="{{yearOptions}}" value="{{giftForm.yearIndex}}" bindchange="onGiftYearChange">
+            <view class="picker-val">{{giftForm.year}} 年 ▾</view>
+          </picker>
+        </view>
+        <view class="form-row-group">
+          <view class="form-label">礼物</view>
+          <input class="form-input" placeholder="送了什么" value="{{giftForm.item}}" bindinput="onGiftItemInput" />
+        </view>
+        <view class="form-row-group">
+          <view class="form-label">备注</view>
+          <input class="form-input" placeholder="ta 的反应、购买渠道等" value="{{giftForm.note}}" bindinput="onGiftNoteInput" />
+        </view>
+        <button class="btn-main form-submit-btn" bindtap="submitAddGift">保存</button>
+      </view>
+
+      <view class="empty-tip muted" wx:if="{{record.giftHistory.length === 0 && !showAddGift}}">
+        还没有礼物记录，记下每年送了什么吧
+      </view>
+      <view wx:for="{{record.giftHistory}}" wx:key="index" class="gift-item">
+        <view class="gift-year-badge">{{item.year}}</view>
+        <view class="gift-info">
+          <view class="gift-name">{{item.item}}</view>
+          <view class="muted gift-note" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+        <view class="delete-btn" bindtap="deleteGift" data-index="{{index}}">×</view>
+      </view>
+    </view>
+
+    <!-- 心愿单 -->
+    <view class="card section-card">
+      <view class="section-header">
+        <view class="section-title">心愿单</view>
+        <view class="add-link" bindtap="toggleAddWish">{{showAddWish ? '收起' : '+ 添加'}}</view>
+      </view>
+
+      <view class="inline-form" wx:if="{{showAddWish}}">
+        <view class="form-row-group">
+          <view class="form-label">心愿</view>
+          <input class="form-input" placeholder="ta 想要什么" value="{{wishForm.item}}" bindinput="onWishItemInput" />
+        </view>
+        <view class="form-row-group">
+          <view class="form-label">备注</view>
+          <input class="form-input" placeholder="在哪提到的、链接等" value="{{wishForm.note}}" bindinput="onWishNoteInput" />
+        </view>
+        <button class="btn-main form-submit-btn" bindtap="submitAddWish">保存</button>
+      </view>
+
+      <view class="empty-tip muted" wx:if="{{record.wishlist.length === 0 && !showAddWish}}">
+        随手记下 ta 平时提到的喜好，送礼不再犯难
+      </view>
+      <view wx:for="{{record.wishlist}}" wx:key="index" class="wish-item">
+        <view class="wish-dot">✦</view>
+        <view class="wish-info">
+          <view class="wish-name">{{item.item}}</view>
+          <view class="muted wish-note" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+        <view class="delete-btn" bindtap="deleteWish" data-index="{{index}}">×</view>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- 底部操作 -->
   <view class="action-row">
     <button class="btn-soft action-half" bindtap="editRecord">编辑</button>
     <button class="btn-danger action-half" bindtap="deleteRecord">删除</button>
   </view>
+
 </view>

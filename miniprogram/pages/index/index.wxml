@@ -39,7 +39,7 @@
     bindtap="goDetail"
   >
     <view class="mini-name">{{item.name}}</view>
-    <view class="muted mini-sub">{{item.relation}} · 今天生日</view>
+    <view class="muted mini-sub">{{item.relation}} · 今天生日 🎂</view>
   </view>
 
   <view class="section-head">
@@ -65,4 +65,40 @@
     <button class="btn-main quick-btn" bindtap="goAdd">添加生日</button>
     <button class="btn-soft quick-btn" bindtap="goList">查看生日簿</button>
   </view>
+
+  <!-- 好友邀请 -->
+  <view class="section-head" style="margin-top:12rpx">
+    <view class="section-title">好友邀请</view>
+  </view>
+  <view class="invite-row">
+    <view class="card invite-card" bindtap="openInviteModal">
+      <view class="invite-icon">🔗</view>
+      <view class="invite-label">邀请好友<br/>填写生日</view>
+    </view>
+    <view class="card invite-card" bindtap="goInbox">
+      <view class="invite-icon">📥</view>
+      <view class="invite-label">查看收件箱</view>
+      <view class="inbox-badge" wx:if="{{inboxCount > 0}}">{{inboxCount}}</view>
+    </view>
+  </view>
+
+  <!-- 邀请弹窗 -->
+  <view class="modal-mask" wx:if="{{showInviteModal}}" bindtap="closeInviteModal">
+    <view class="modal-box" catchtap="noop">
+      <view class="modal-title">邀请好友填写生日</view>
+      <view class="modal-body">
+        <view wx:if="{{qrLoading}}" class="muted qr-tip">正在生成二维码...</view>
+        <image
+          wx:elif="{{inviteQRCode}}"
+          src="{{inviteQRCode}}"
+          class="qr-image"
+          mode="aspectFit"
+        />
+        <view wx:else class="muted qr-tip">发送邀请卡，好友点击即可填写</view>
+      </view>
+      <button class="btn-main modal-btn" open-type="share">分享邀请卡 🎁</button>
+      <button class="btn-soft modal-btn" bindtap="closeInviteModal">关闭</button>
+    </view>
+  </view>
+
 </view>
