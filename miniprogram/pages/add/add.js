@@ -53,12 +53,29 @@ Page({
     if (editId) {
       wx.removeStorageSync(EDIT_TARGET_KEY)
       this.fillFormById(editId)
+      // switchTab from a non-tab page (detail) can fire onShow more than
+      // once during the transition. Guard so the immediate repeat keeps
+      // the edit form instead of falling through to resetForm().
+      this._keepEditForm = true
+      return
+    }
+
+    if (this._keepEditForm) {
+      // Spurious second onShow right after an edit-fill — keep the form,
+      // consume the guard so a later real visit can still reset.
+      this._keepEditForm = false
       return
     }
 
     if (this.data.form.id) {
       this.resetForm()
     }
+  },
+
+  onHide() {
+    // Leaving the add tab ends the edit-entry transition; a later return
+    // to the 添加 tab should start a fresh add form.
+    this._keepEditForm = false
   },
 
   fillFormById(id) {
