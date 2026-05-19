@@ -114,7 +114,9 @@ page {
 .submit-btn {
   width: 100%;
   height: 96rpx;
-  line-height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 32rpx;
   font-weight: 700;
   border-radius: 999rpx;
