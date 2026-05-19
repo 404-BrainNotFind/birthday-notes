@@ -86,3 +86,185 @@
   color: #d95f4e;
   border-radius: 999rpx;
 }
+
+/* ── 生日当天横幅 ── */
+.birthday-banner {
+  background: linear-gradient(135deg, #d95f4e, #e8816e);
+  color: #fff;
+  padding: 22rpx 28rpx;
+  border-radius: 20rpx;
+  margin-bottom: 22rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ── Tab 切换 ── */
+.tab-bar {
+  display: flex;
+  background: #fffdf9;
+  border-radius: 999rpx;
+  padding: 8rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 10rpx 28rpx rgba(122, 72, 54, 0.08);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 999rpx;
+  color: #8e6f63;
+  font-size: 28rpx;
+}
+
+.tab-active {
+  background: #d95f4e;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── 礼物 & 心愿 ── */
+.section-card {
+  padding: 28rpx;
+  margin-bottom: 22rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.add-link {
+  color: #d95f4e;
+  font-size: 26rpx;
+}
+
+.empty-tip {
+  font-size: 26rpx;
+  padding: 16rpx 0;
+}
+
+/* ── 内联表单 ── */
+.inline-form {
+  background: #fff8f2;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.form-row-group {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 18rpx;
+}
+
+.form-label {
+  color: #8e6f63;
+  font-size: 26rpx;
+  min-width: 80rpx;
+}
+
+.form-input {
+  flex: 1;
+  border-bottom: 1rpx solid #f3e5db;
+  padding: 8rpx 0;
+  font-size: 28rpx;
+}
+
+.picker-val {
+  color: #3d302c;
+  font-size: 28rpx;
+}
+
+.form-submit-btn {
+  margin-top: 8rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28rpx;
+}
+
+.form-submit-btn::after {
+  border: none;
+}
+
+/* ── 礼物列表 ── */
+.gift-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f3e5db;
+}
+
+.gift-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.gift-year-badge {
+  background: #ffe8dd;
+  color: #b45747;
+  font-size: 22rpx;
+  font-weight: 700;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  white-space: nowrap;
+}
+
+.gift-info {
+  flex: 1;
+}
+
+.gift-name {
+  font-size: 28rpx;
+  margin-bottom: 4rpx;
+}
+
+.gift-note {
+  font-size: 24rpx;
+}
+
+/* ── 心愿列表 ── */
+.wish-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f3e5db;
+}
+
+.wish-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.wish-dot {
+  color: #d95f4e;
+  font-size: 20rpx;
+  margin-top: 8rpx;
+}
+
+.wish-info {
+  flex: 1;
+}
+
+.wish-name {
+  font-size: 28rpx;
+  margin-bottom: 4rpx;
+}
+
+.wish-note {
+  font-size: 24rpx;
+}
+
+/* ── 删除按钮 ── */
+.delete-btn {
+  color: #c9a49c;
+  font-size: 40rpx;
+  padding: 0 8rpx;
+  line-height: 1;
+}

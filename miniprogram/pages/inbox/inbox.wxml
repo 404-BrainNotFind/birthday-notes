@@ -1,0 +1,43 @@
+<view class="page-shell">
+
+  <view wx:if="{{loading}}" class="center-tip muted">加载中...</view>
+
+  <view wx:elif="{{items.length === 0}}" class="card empty-card">
+    <view class="empty-icon">📭</view>
+    <view class="empty-title">收件箱是空的</view>
+    <view class="muted empty-desc">邀请好友填写生日后，收到的信息会显示在这里</view>
+  </view>
+
+  <block wx:else>
+    <view class="hint muted">好友填写的生日信息，确认后导入生日簿</view>
+    <view
+      wx:for="{{items}}"
+      wx:key="_id"
+      class="card inbox-card"
+    >
+      <view class="inbox-name">{{item.name}}</view>
+      <view class="inbox-birthday muted">🗓️ 生日：{{item.month}}月{{item.day}}日</view>
+      <view class="inbox-contact muted" wx:if="{{item.contact}}">📱 {{item.contact}}</view>
+      <view class="inbox-note muted" wx:if="{{item.note}}">💬 {{item.note}}</view>
+      <view class="inbox-actions">
+        <button
+          class="btn-main inbox-btn"
+          bindtap="importItem"
+          data-id="{{item._id}}"
+          data-name="{{item.name}}"
+          data-month="{{item.month}}"
+          data-day="{{item.day}}"
+          data-contact="{{item.contact}}"
+          data-note="{{item.note}}"
+        >导入到生日簿</button>
+        <button
+          class="btn-soft inbox-btn"
+          bindtap="ignoreItem"
+          data-id="{{item._id}}"
+          data-name="{{item.name}}"
+        >忽略</button>
+      </view>
+    </view>
+  </block>
+
+</view>

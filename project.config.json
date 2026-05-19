@@ -33,5 +33,6 @@
   "appid": "wx9570e5a50e007bdb",
   "projectname": "birthday-notes-phase1",
   "editorSetting": {},
-  "libVersion": "3.14.3"
+  "libVersion": "3.14.3",
+  "cloudfunctionRoot": "cloudfunctions/"
 }

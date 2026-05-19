@@ -84,3 +84,106 @@
 .quick-btn {
   flex: 1;
 }
+
+/* ── 好友邀请 ── */
+.invite-row {
+  display: flex;
+  gap: 18rpx;
+  margin-bottom: 40rpx;
+}
+
+.invite-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28rpx 16rpx;
+  position: relative;
+  gap: 10rpx;
+}
+
+.invite-icon {
+  font-size: 48rpx;
+}
+
+.invite-label {
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 1.5;
+  color: #5c4941;
+}
+
+.inbox-badge {
+  position: absolute;
+  top: 12rpx;
+  right: 12rpx;
+  background: #d95f4e;
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 700;
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+}
+
+/* ── 邀请弹窗 ── */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #fffdf9;
+  border-radius: 28rpx;
+  padding: 40rpx 32rpx 32rpx;
+  width: 560rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 800;
+  margin-bottom: 24rpx;
+  color: #3d302c;
+}
+
+.modal-body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24rpx;
+  min-height: 200rpx;
+  align-items: center;
+}
+
+.qr-image {
+  width: 240rpx;
+  height: 240rpx;
+}
+
+.qr-tip {
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.modal-btn {
+  width: 100%;
+  margin-top: 14rpx;
+}
+
+.modal-btn::after {
+  border: none;
+}

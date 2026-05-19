@@ -13,10 +13,11 @@ function normalizeRecord(item) {
     remindDays: item.remindDays,
     contact: item.contact || '',
     note: item.note || '',
-    createTime: item.createTime
+    createTime: item.createTime,
+    giftHistory: Array.isArray(item.giftHistory) ? item.giftHistory : [],
+    wishlist: Array.isArray(item.wishlist) ? item.wishlist : [],
   }
 
-  // Migrate old lunar demo data into a normal public date record.
   if (item.id === 'b004' && item.calendarType === 'lunar') {
     next.name = '飞舞'
     next.relation = '朋友'
@@ -67,16 +68,62 @@ function addBirthday(record) {
 
 function updateBirthday(record) {
   const list = getRawBirthdays().map((item) => {
-    if (item.id === record.id) {
-      return record
+    if (item.id !== record.id) return item
+    // Spread existing item first to preserve giftHistory/wishlist,
+    // then override only the fields the edit form manages.
+    return {
+      ...item,
+      name: record.name,
+      relation: record.relation,
+      month: record.month,
+      day: record.day,
+      remindDays: record.remindDays,
+      contact: record.contact,
+      note: record.note,
+      createTime: record.createTime,
     }
-    return item
   })
   wx.setStorageSync(BIRTHDAY_KEY, list)
 }
 
 function deleteBirthday(id) {
   const list = getRawBirthdays().filter((item) => item.id !== id)
+  wx.setStorageSync(BIRTHDAY_KEY, list)
+}
+
+function addGift(id, gift) {
+  const list = getRawBirthdays().map((item) => {
+    if (item.id !== id) return item
+    return { ...item, giftHistory: [gift, ...(item.giftHistory || [])] }
+  })
+  wx.setStorageSync(BIRTHDAY_KEY, list)
+}
+
+function deleteGift(id, index) {
+  const list = getRawBirthdays().map((item) => {
+    if (item.id !== id) return item
+    const giftHistory = [...(item.giftHistory || [])]
+    giftHistory.splice(index, 1)
+    return { ...item, giftHistory }
+  })
+  wx.setStorageSync(BIRTHDAY_KEY, list)
+}
+
+function addWish(id, wish) {
+  const list = getRawBirthdays().map((item) => {
+    if (item.id !== id) return item
+    return { ...item, wishlist: [...(item.wishlist || []), wish] }
+  })
+  wx.setStorageSync(BIRTHDAY_KEY, list)
+}
+
+function deleteWish(id, index) {
+  const list = getRawBirthdays().map((item) => {
+    if (item.id !== id) return item
+    const wishlist = [...(item.wishlist || [])]
+    wishlist.splice(index, 1)
+    return { ...item, wishlist }
+  })
   wx.setStorageSync(BIRTHDAY_KEY, list)
 }
 
@@ -87,5 +134,9 @@ module.exports = {
   getBirthdayById,
   getBirthdays,
   getRawBirthdays,
-  updateBirthday
+  updateBirthday,
+  addGift,
+  deleteGift,
+  addWish,
+  deleteWish,
 }

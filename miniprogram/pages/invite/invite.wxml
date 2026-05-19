@@ -1,0 +1,83 @@
+<!-- 提交成功状态 -->
+<view class="success-shell" wx:if="{{submitted}}">
+  <view class="success-icon">🎉</view>
+  <view class="success-title">已提交！</view>
+  <view class="success-desc muted">ta 会在你生日时送上祝福 💝</view>
+</view>
+
+<!-- 填写表单 -->
+<view class="page-shell" wx:else>
+  <view class="invite-hero">
+    <view class="invite-big-icon">🎂</view>
+    <view class="invite-title">嗨，填一下你的生日吧</view>
+    <view class="muted invite-subtitle">ta 想在你生日时第一时间送上祝福</view>
+  </view>
+
+  <view class="card form-card">
+    <view class="field-group">
+      <view class="field-label">你的名字 <text class="required">*</text></view>
+      <input
+        class="field-input"
+        placeholder="怎么称呼你"
+        value="{{form.name}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <view class="field-divider" />
+
+    <view class="field-group">
+      <view class="field-label">生日 <text class="required">*</text></view>
+      <view class="birthday-pickers">
+        <picker
+          mode="selector"
+          range="{{monthOptions}}"
+          value="{{monthIndex}}"
+          bindchange="onMonthChange"
+        >
+          <view class="picker-chip">{{form.month}} 月 ▾</view>
+        </picker>
+        <picker
+          mode="selector"
+          range="{{dayOptions}}"
+          value="{{dayIndex}}"
+          bindchange="onDayChange"
+        >
+          <view class="picker-chip">{{form.day}} 日 ▾</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="field-divider" />
+
+    <view class="field-group">
+      <view class="field-label">联系方式 <text class="optional">（可选）</text></view>
+      <input
+        class="field-input"
+        placeholder="微信号 / 手机号"
+        value="{{form.contact}}"
+        bindinput="onContactInput"
+      />
+    </view>
+
+    <view class="field-divider" />
+
+    <view class="field-group">
+      <view class="field-label">留言 <text class="optional">（可选）</text></view>
+      <input
+        class="field-input"
+        placeholder="想说的话"
+        value="{{form.note}}"
+        bindinput="onNoteInput"
+      />
+    </view>
+  </view>
+
+  <button
+    class="btn-main submit-btn"
+    bindtap="submit"
+    disabled="{{submitting}}"
+  >
+    {{submitting ? '提交中...' : '提交 🎉'}}
+  </button>
+</view>
