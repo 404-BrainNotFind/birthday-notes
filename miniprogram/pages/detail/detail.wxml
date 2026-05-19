@@ -15,7 +15,7 @@
   <!-- Tab 切换 -->
   <view class="tab-bar">
     <view class="tab-item {{activeTab === 'info' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="info">基本信息</view>
-    <view class="tab-item {{activeTab === 'gifts' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="gifts">礼物 &amp; 心愿</view>
+    <view class="tab-item {{activeTab === 'gifts' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="gifts">礼物 · 心愿</view>
   </view>
 
   <!-- Tab：基本信息 -->
