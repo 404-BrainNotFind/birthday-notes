@@ -179,6 +179,28 @@
   text-align: center;
 }
 
+.demo-tip {
+  text-align: center;
+  padding: 20rpx 12rpx;
+}
+
+.demo-tip-icon {
+  font-size: 64rpx;
+  margin-bottom: 12rpx;
+}
+
+.demo-tip-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #3d302c;
+  margin-bottom: 10rpx;
+}
+
+.demo-tip-desc {
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
 .modal-btn {
   width: 100%;
   margin-top: 14rpx;

@@ -94,9 +94,14 @@
           class="qr-image"
           mode="aspectFit"
         />
-        <view wx:else class="muted qr-tip">发送邀请卡，好友点击即可填写</view>
+        <view wx:else class="demo-tip">
+          <view class="demo-tip-icon">📱</view>
+          <view class="demo-tip-title">演示模式</view>
+          <view class="muted demo-tip-desc">小程序未发布，二维码暂不可用。可用下面两种方式演示好友邀请流程。</view>
+        </view>
       </view>
-      <button class="btn-main modal-btn" open-type="share">分享邀请卡 🎁</button>
+      <button class="btn-main modal-btn" bindtap="openInvitePage">📝 打开填写页（演示好友视角）</button>
+      <button class="btn-soft modal-btn" bindtap="copyInvitePath">📋 复制邀请路径</button>
       <button class="btn-soft modal-btn" bindtap="closeInviteModal">关闭</button>
     </view>
   </view>

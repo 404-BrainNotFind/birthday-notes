@@ -88,8 +88,21 @@ Page({
       },
       fail: () => {
         this.setData({ qrLoading: false })
-        wx.showToast({ title: '生成失败，请用分享卡', icon: 'none' })
       },
+    })
+  },
+
+  openInvitePage() {
+    const token = getOrCreateToken()
+    this.setData({ showInviteModal: false })
+    wx.navigateTo({ url: `/pages/invite/invite?token=${token}` })
+  },
+
+  copyInvitePath() {
+    const token = getOrCreateToken()
+    wx.setClipboardData({
+      data: `pages/invite/invite?token=${token}`,
+      success: () => wx.showToast({ title: '已复制邀请路径', icon: 'success' }),
     })
   },
 
