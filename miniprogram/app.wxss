@@ -1,0 +1,77 @@
+page {
+  background: #fff8f2;
+  color: #3d302c;
+  font-size: 28rpx;
+}
+
+.custom-nav {
+  height: 150rpx;
+  padding: 64rpx 180rpx 0;
+  background: #fff8f2;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-nav-title {
+  max-width: 360rpx;
+  font-size: 34rpx;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #3d302c;
+  text-align: center;
+}
+
+.custom-nav-subtitle {
+  display: none;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 28rpx;
+  box-shadow: 0 10rpx 28rpx rgba(122, 72, 54, 0.08);
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.muted {
+  color: #8e6f63;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  background: #ffe8dd;
+  color: #b45747;
+}
+
+.btn-main {
+  background: #d95f4e;
+  color: #ffffff;
+  border-radius: 999rpx;
+}
+
+.btn-soft {
+  background: #f8e8dd;
+  color: #7f6055;
+  border-radius: 999rpx;
+}
+
+.price-strong {
+  color: #d95f4e;
+  font-weight: 700;
+}
