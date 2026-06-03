@@ -26,9 +26,19 @@
       </picker>
     </view>
 
+    <view class="field">
+      <view class="label">生日类型</view>
+      <picker mode="selector" range="{{calendarOptions}}" value="{{calendarIndex}}" bindchange="onCalendarChange">
+        <view class="picker-field">
+          <view>{{calendarOptions[calendarIndex]}}</view>
+          <view class="picker-arrow">请选择</view>
+        </view>
+      </picker>
+    </view>
+
     <view class="field-row">
       <view class="field half">
-        <view class="label">月份</view>
+        <view class="label">{{form.calendarType === 'lunar' ? '农历月份' : '月份'}}</view>
         <picker mode="selector" range="{{monthOptions}}" value="{{monthIndex}}" bindchange="onMonthChange">
           <view class="picker-field">
             <view>{{form.month}} 月</view>
@@ -37,7 +47,7 @@
         </picker>
       </view>
       <view class="field half">
-        <view class="label">日期</view>
+        <view class="label">{{form.calendarType === 'lunar' ? '农历日期' : '日期'}}</view>
         <picker mode="selector" range="{{dayOptions}}" value="{{dayIndex}}" bindchange="onDayChange">
           <view class="picker-field">
             <view>{{form.day}} 日</view>

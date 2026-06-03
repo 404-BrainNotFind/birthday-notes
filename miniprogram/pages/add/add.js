@@ -1,11 +1,17 @@
 const dateUtil = require('../../utils/date')
 
 const EDIT_TARGET_KEY = 'birthday_edit_target'
+const LIST_FILTER_KEY = 'birthday_list_filter'
+const calendarOptions = ['公历生日', '农历生日']
 const relationOptions = ['朋友', '同学', '家人', '同事', '其他']
 const remindOptions = [1, 3, 5, 7, 10, 15, 30]
 const monthOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 
-function buildDayOptions(month) {
+function buildDayOptions(month, calendarType) {
+  calendarType = calendarType || 'solar'
+  if (calendarType === 'lunar') {
+    return Array.from({ length: 30 }, (_, index) => index + 1)
+  }
   const totalDays = new Date(2024, month, 0).getDate()
   return Array.from({ length: totalDays }, (_, index) => index + 1)
 }
@@ -15,6 +21,7 @@ function createEmptyForm() {
     id: '',
     name: '',
     relation: relationOptions[0],
+    calendarType: 'solar',
     month: 1,
     day: 1,
     remindDays: 3,
@@ -31,11 +38,13 @@ function getStore() {
 Page({
   data: {
     form: createEmptyForm(),
+    calendarOptions,
     relationOptions,
     remindOptions,
     monthOptions,
     dayOptions: buildDayOptions(1),
     relationIndex: 0,
+    calendarIndex: 0,
     monthIndex: 0,
     dayIndex: 0,
     remindIndex: 1,
@@ -53,16 +62,11 @@ Page({
     if (editId) {
       wx.removeStorageSync(EDIT_TARGET_KEY)
       this.fillFormById(editId)
-      // switchTab from a non-tab page (detail) can fire onShow more than
-      // once during the transition. Guard so the immediate repeat keeps
-      // the edit form instead of falling through to resetForm().
       this._keepEditForm = true
       return
     }
 
     if (this._keepEditForm) {
-      // Spurious second onShow right after an edit-fill — keep the form,
-      // consume the guard so a later real visit can still reset.
       this._keepEditForm = false
       return
     }
@@ -73,8 +77,6 @@ Page({
   },
 
   onHide() {
-    // Leaving the add tab ends the edit-entry transition; a later return
-    // to the 添加 tab should start a fresh add form.
     this._keepEditForm = false
   },
 
@@ -86,7 +88,8 @@ Page({
     }
 
     const monthIndex = monthOptions.indexOf(record.month)
-    const dayOptions = buildDayOptions(record.month)
+    const calType = record.calendarType || 'solar'
+    const dayOptions = buildDayOptions(record.month, calType)
     const dayIndex = dayOptions.indexOf(record.day)
     const relationIndex = relationOptions.indexOf(record.relation)
     const remindIndex = remindOptions.indexOf(record.remindDays)
@@ -96,6 +99,7 @@ Page({
         id: record.id,
         name: record.name,
         relation: record.relation,
+        calendarType: calType,
         month: record.month,
         day: record.day,
         remindDays: record.remindDays,
@@ -104,6 +108,7 @@ Page({
         createTime: record.createTime
       },
       relationIndex: relationIndex >= 0 ? relationIndex : 0,
+      calendarIndex: calType === 'lunar' ? 1 : 0,
       monthIndex: monthIndex >= 0 ? monthIndex : 0,
       dayOptions,
       dayIndex: dayIndex >= 0 ? dayIndex : 0,
@@ -117,6 +122,7 @@ Page({
       form: createEmptyForm(),
       dayOptions: buildDayOptions(1),
       relationIndex: 0,
+      calendarIndex: 0,
       monthIndex: 0,
       dayIndex: 0,
       remindIndex: 1,
@@ -150,10 +156,29 @@ Page({
     })
   },
 
+  onCalendarChange(event) {
+    const calendarIndex = Number(event.detail.value)
+    const calendarType = calendarIndex === 1 ? 'lunar' : 'solar'
+    const dayOptions = buildDayOptions(this.data.form.month, calendarType)
+    let day = this.data.form.day
+
+    if (!dayOptions.includes(day)) {
+      day = dayOptions[dayOptions.length - 1]
+    }
+
+    this.setData({
+      calendarIndex,
+      dayOptions,
+      dayIndex: dayOptions.indexOf(day),
+      'form.calendarType': calendarType,
+      'form.day': day
+    })
+  },
+
   onMonthChange(event) {
     const monthIndex = Number(event.detail.value)
     const month = monthOptions[monthIndex]
-    const dayOptions = buildDayOptions(month)
+    const dayOptions = buildDayOptions(month, this.data.form.calendarType)
     let day = this.data.form.day
 
     if (!dayOptions.includes(day)) {
@@ -201,6 +226,7 @@ Page({
       id: form.id || `b${Date.now()}`,
       name: form.name.trim(),
       relation: form.relation,
+      calendarType: form.calendarType || 'solar',
       month: form.month,
       day: form.day,
       remindDays: form.remindDays,
@@ -222,6 +248,7 @@ Page({
 
     setTimeout(() => {
       this.resetForm()
+      wx.setStorageSync(LIST_FILTER_KEY, '全部')
       wx.switchTab({
         url: '/pages/list/list'
       })

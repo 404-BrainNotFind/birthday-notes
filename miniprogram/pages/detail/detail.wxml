@@ -25,6 +25,10 @@
         <view class="info-label">生日日期</view>
         <view>{{record.birthdayText}}</view>
       </view>
+      <view class="info-row" wx:if="{{record.calendarType === 'lunar'}}">
+        <view class="info-label">下次公历</view>
+        <view>{{record.nextDateText}}</view>
+      </view>
       <view class="info-row">
         <view class="info-label">提醒设置</view>
         <view>提前 {{record.remindDays}} 天</view>

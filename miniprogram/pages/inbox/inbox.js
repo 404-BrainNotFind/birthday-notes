@@ -46,7 +46,7 @@ Page({
   },
 
   importItem(e) {
-    const { id, name, month, day, contact, note } = e.currentTarget.dataset
+    const { id, name, calendarType, month, day, contact, note } = e.currentTarget.dataset
     wx.showModal({
       title: `导入 ${name} 的生日`,
       content: `生日：${month}月${day}日\n将添加到你的生日簿`,
@@ -57,6 +57,7 @@ Page({
           id: `imported_${Date.now()}`,
           name,
           relation: '朋友',
+          calendarType: calendarType || 'solar',
           month,
           day,
           remindDays: 7,
@@ -95,7 +96,7 @@ Page({
     const day = Math.floor(Math.random() * 28) + 1
     wx.cloud.callFunction({
       name: 'submitInvitation',
-      data: { inviterToken: token, name, month, day, contact: '', note: '演示数据' },
+      data: { inviterToken: token, name, calendarType: 'solar', month, day, contact: '', note: '演示数据' },
       success: () => {
         this.setData({ demoLoading: false })
         this.loadItems()

@@ -1,4 +1,4 @@
-<view class="page-shell">
+﻿<view class="page-shell">
   <view class="hero card">
     <view class="hero-title">别忘了重要的人</view>
     <view class="muted hero-desc">记录好友生日，提前准备祝福和心意。</view>
@@ -39,7 +39,7 @@
     bindtap="goDetail"
   >
     <view class="mini-name">{{item.name}}</view>
-    <view class="muted mini-sub">{{item.relation}} · 今天生日 🎂</view>
+    <view class="muted mini-sub">{{item.relation}} · {{item.birthdayText}} · 今天生日 🎂</view>
   </view>
 
   <view class="section-head">

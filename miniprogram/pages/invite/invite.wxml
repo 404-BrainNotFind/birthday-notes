@@ -2,14 +2,14 @@
 <view class="success-shell" wx:if="{{submitted}}">
   <view class="success-icon">🎉</view>
   <view class="success-title">已提交！</view>
-  <view class="success-desc muted">ta 会在你生日时送上祝福 💝</view>
+  <view class="success-desc muted">ta 会在你生日时送上祝福 🎂</view>
 </view>
 
 <!-- 填写表单 -->
 <view class="page-shell" wx:else>
   <view class="invite-hero">
     <view class="invite-big-icon">🎂</view>
-    <view class="invite-title">嗨，填一下你的生日吧</view>
+    <view class="invite-title">嘿，填一下你的生日吧</view>
     <view class="muted invite-subtitle">ta 想在你生日时第一时间送上祝福</view>
   </view>
 
@@ -27,7 +27,16 @@
     <view class="field-divider" />
 
     <view class="field-group">
-      <view class="field-label">生日 <text class="required">*</text></view>
+      <view class="field-label">生日类型 <text class="required">*</text></view>
+      <picker mode="selector" range="{{calendarOptions}}" value="{{calendarIndex}}" bindchange="onCalendarChange">
+        <view class="picker-chip">{{calendarOptions[calendarIndex]}} ▼</view>
+      </picker>
+    </view>
+
+    <view class="field-divider" />
+
+    <view class="field-group">
+      <view class="field-label">{{form.calendarType === 'lunar' ? '农历生日' : '生日日期'}} <text class="required">*</text></view>
       <view class="birthday-pickers">
         <picker
           mode="selector"
@@ -35,7 +44,7 @@
           value="{{monthIndex}}"
           bindchange="onMonthChange"
         >
-          <view class="picker-chip">{{form.month}} 月 ▾</view>
+          <view class="picker-chip">{{form.month}} 月 ▼</view>
         </picker>
         <picker
           mode="selector"
@@ -43,7 +52,7 @@
           value="{{dayIndex}}"
           bindchange="onDayChange"
         >
-          <view class="picker-chip">{{form.day}} 日 ▾</view>
+          <view class="picker-chip">{{form.day}} 日 ▼</view>
         </picker>
       </view>
     </view>

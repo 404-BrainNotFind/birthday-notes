@@ -8,11 +8,12 @@ exports.main = async (event) => {
   } catch (e) {
     // 集合已存在，忽略
   }
-  const { inviterToken, name, month, day, contact, note } = event
+  const { inviterToken, name, calendarType, month, day, contact, note } = event
   await db.collection('invitations').add({
     data: {
       inviterToken,
       name,
+      calendarType: calendarType || 'solar',
       month,
       day,
       contact: contact || '',

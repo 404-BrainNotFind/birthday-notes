@@ -1,3 +1,5 @@
+const lunar = require('./lunar')
+
 function pad(value) {
   return String(value).padStart(2, '0')
 }
@@ -6,11 +8,16 @@ function formatMonthDay(month, day) {
   return `${month}月${day}日`
 }
 
+function formatDateText(date) {
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+}
+
 function createBlessing(name) {
   return `${name}，生日快乐！祝你新的一岁开心顺利，万事如意！`
 }
 
-function getNextSolarBirthday(month, day, today = new Date()) {
+function getNextSolarBirthday(month, day, today) {
+  today = today || new Date()
   const currentYear = today.getFullYear()
   let nextDate = new Date(currentYear, month - 1, day)
   nextDate.setHours(0, 0, 0, 0)
@@ -26,18 +33,33 @@ function getNextSolarBirthday(month, day, today = new Date()) {
   return nextDate
 }
 
-function getDaysUntilSolarBirthday(month, day, today = new Date()) {
+function getDaysUntilSolarBirthday(month, day, today) {
   const nextDate = getNextSolarBirthday(month, day, today)
-  const normalizedToday = new Date(today)
+  const normalizedToday = new Date(today || new Date())
   normalizedToday.setHours(0, 0, 0, 0)
   const diff = nextDate.getTime() - normalizedToday.getTime()
   return Math.round(diff / (24 * 60 * 60 * 1000))
 }
 
-function enrichBirthday(item, today = new Date()) {
-  const birthdayText = formatMonthDay(item.month, item.day)
+function getDaysUntilDate(nextDate, today) {
+  const normalizedToday = new Date(today || new Date())
+  normalizedToday.setHours(0, 0, 0, 0)
+  const diff = nextDate.getTime() - normalizedToday.getTime()
+  return Math.round(diff / (24 * 60 * 60 * 1000))
+}
+
+function enrichBirthday(item, today) {
+  today = today || new Date()
+  const calendarType = item.calendarType || 'solar'
+  const isLunar = calendarType === 'lunar'
+  const birthdayText = isLunar
+    ? lunar.formatLunarMonthDay(item.month, item.day)
+    : `公历 ${formatMonthDay(item.month, item.day)}`
   const blessingText = createBlessing(item.name)
-  const daysUntil = getDaysUntilSolarBirthday(item.month, item.day, today)
+  const nextDate = isLunar
+    ? lunar.getNextLunarDate(item.month, item.day, false, today)
+    : getNextSolarBirthday(item.month, item.day, today)
+  const daysUntil = nextDate ? getDaysUntilDate(nextDate, today) : 9999
 
   let statusText = '已记录'
   if (daysUntil === 0) {
@@ -50,11 +72,13 @@ function enrichBirthday(item, today = new Date()) {
 
   return {
     ...item,
+    calendarType,
     birthdayText,
     blessingText,
     daysUntil,
     isToday: daysUntil === 0,
     isUpcoming: daysUntil > 0 && daysUntil <= item.remindDays,
+    nextDateText: nextDate ? formatDateText(nextDate) : '暂不支持该年份',
     statusText
   }
 }
@@ -68,11 +92,18 @@ function sortByUpcoming(list) {
 }
 
 function getStats(list) {
-  const solarList = list.filter((item) => typeof item.daysUntil === 'number')
-  const todayCount = solarList.filter((item) => item.daysUntil === 0).length
-  const within7Count = solarList.filter((item) => item.daysUntil >= 0 && item.daysUntil <= 7).length
+  const validList = list.filter((item) => typeof item.daysUntil === 'number')
+  const todayCount = validList.filter((item) => item.daysUntil === 0).length
+  const within7Count = validList.filter((item) => item.daysUntil >= 0 && item.daysUntil <= 7).length
   const thisMonth = new Date().getMonth() + 1
-  const monthCount = list.filter((item) => item.month === thisMonth).length
+  // 使用 nextDateText 匹配本月生日，兼容农历
+  const monthCount = list.filter((item) => {
+    if (typeof item.daysUntil !== 'number' || !item.nextDateText) {
+      // 降级：用原始 month 字段
+      return item.month === thisMonth
+    }
+    return item.nextDateText.includes(`年${thisMonth}月`)
+  }).length
 
   return {
     totalCount: list.length,
@@ -82,7 +113,8 @@ function getStats(list) {
   }
 }
 
-function formatCreateTime(date = new Date()) {
+function formatCreateTime(date) {
+  date = date || new Date()
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
@@ -90,6 +122,7 @@ module.exports = {
   createBlessing,
   enrichBirthday,
   formatCreateTime,
+  formatDateText,
   formatMonthDay,
   getStats,
   sortByUpcoming
