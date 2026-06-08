@@ -17,6 +17,7 @@ function normalizeRecord(item) {
     createTime: item.createTime,
     giftHistory: Array.isArray(item.giftHistory) ? item.giftHistory : [],
     wishlist: Array.isArray(item.wishlist) ? item.wishlist : [],
+    blessingText: item.blessingText || '',
   }
 
   if (item.id === 'b004' && item.calendarType === 'lunar') {
@@ -129,6 +130,14 @@ function deleteWish(id, index) {
   wx.setStorageSync(BIRTHDAY_KEY, list)
 }
 
+function saveBlessing(id, text) {
+  const list = getRawBirthdays().map((item) => {
+    if (item.id !== id) return item
+    return { ...item, blessingText: text }
+  })
+  wx.setStorageSync(BIRTHDAY_KEY, list)
+}
+
 module.exports = {
   addBirthday,
   deleteBirthday,
@@ -141,4 +150,5 @@ module.exports = {
   deleteGift,
   addWish,
   deleteWish,
+  saveBlessing,
 }

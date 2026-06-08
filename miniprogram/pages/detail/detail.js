@@ -30,7 +30,10 @@ Page({
       wx.showToast({ title: '记录不存在', icon: 'none' })
       return
     }
-    this.setData({ record })
+    this.setData({
+      record,
+      blessingText: record.blessingText || defaultBlessingText
+    })
   },
 
   switchTab(e) {
@@ -192,6 +195,7 @@ Page({
           return
         }
         this.setData({ blessingText: result.blessing })
+        store.saveBlessing(this.recordId, result.blessing)
         wx.showToast({ title: '生成成功', icon: 'success' })
       },
       fail: (err) => {
