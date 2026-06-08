@@ -1,3 +1,39 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 24rpx;
+  background: #f8ebe2;
+  border-radius: 999rpx;
+  margin-bottom: 18rpx;
+}
+
+.search-icon {
+  font-size: 26rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #5f4b44;
+}
+
+.search-placeholder {
+  color: #b89b8e;
+}
+
+.search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 999rpx;
+  background: #e6ccbd;
+  color: #7d6055;
+  font-size: 22rpx;
+}
+
 .filter-row {
   display: flex;
   gap: 16rpx;

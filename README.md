@@ -9,6 +9,7 @@
 - **公历 / 农历**两种生日类型，农历自动换算下一次对应的公历日期
 - 首页统计：总人数、今天过生日、7 天内、本月（农历生日按换算后的公历日期统计）
 - 今日生日横幅提醒、按临近程度排序的生日列表
+- 生日簿支持按**姓名 / 备注**搜索，并可与关系分类筛选叠加
 - 提前提醒天数可自定义
 
 ### 礼物账本 + 心愿单
@@ -19,7 +20,7 @@
 ### AI 祝福语
 - 详情页一键「生成 AI 祝福语」，根据姓名、关系、生日、备注自动生成个性化短祝福
 - 生成结果可一键复制
-- 由 MiniMax 大模型生成（调用 `api.minimaxi.com`）
+- 由 MiniMax 大模型生成；调用通过**云函数 `generateBlessing`** 中转，API Key 只存于服务器端，不进小程序包，真机也能用
 
 ### 社交邀请 + 云端收件箱
 - 生成专属邀请，好友打开后自己填写生日信息（同样支持公历 / 农历）
@@ -43,7 +44,7 @@ miniprogram/
   pages/
     index/    首页（统计、今日/近期生日、好友邀请入口）
     add/      添加 / 编辑生日（支持公历、农历）
-    list/     生日簿列表
+    list/     生日簿列表（搜索 + 关系筛选）
     detail/   详情（基本信息 / 礼物 · 心愿 tab，AI 祝福语）
     invite/   好友填写生日的页面
     inbox/    云端收件箱
@@ -56,6 +57,7 @@ cloudfunctions/
   getInboxItems/                    # 拉取当前用户的收件箱
   markImported/                     # 标记已导入/忽略
   generateQRCode/                   # 生成邀请小程序码（需发布后可用）
+  generateBlessing/                 # 调 MiniMax 生成 AI 祝福语（token 存于服务器端）
 ```
 
 ## 运行
@@ -63,11 +65,11 @@ cloudfunctions/
 1. 用微信开发者工具打开本项目
 2. 在 `project.config.json` 中将 `appid` 改为你自己的小程序 AppID
 3. 开通微信云开发，在 `miniprogram/app.js` 中把 `env` 改为你的云开发环境 ID
-4. 右键 `cloudfunctions/` 下各云函数，逐个「上传并部署」
-5. （可选）启用 AI 祝福语：在 `miniprogram/pages/detail/detail.js` 顶部的 `token` 填入你自己的 MiniMax API Key；本地调试需在开发者工具「详情 → 本地设置」勾选「不校验合法域名」，正式发布则需在小程序后台把 `https://api.minimaxi.com` 加入 request 合法域名
+4. 右键 `cloudfunctions/` 下各云函数，逐个「上传并部署：云端安装依赖」
+5. （可选）启用 AI 祝福语：在 `cloudfunctions/generateBlessing/index.js` 顶部的 `TOKEN` 填入你自己的 MiniMax API Key，**保存后重新「上传并部署」该云函数**。由于走云函数中转，无需配置 request 合法域名，真机直接可用。若模型响应较慢导致超时，可在云开发控制台把该云函数的超时时间调大（如 60 秒）
 6. 编译运行
 
-> ⚠️ 不要把真实的 API Key 提交到公开仓库。本仓库中 `detail.js` 的 `token` 默认为空字符串。
+> ⚠️ 不要把真实的 API Key 提交到公开仓库。本仓库中 `generateBlessing/index.js` 的 `TOKEN` 默认为空字符串——本地填入测试、push 前请改回空字符串。小程序端代码（`detail.js`）不含任何 token。
 
 ## 说明
 

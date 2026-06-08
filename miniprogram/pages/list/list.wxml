@@ -1,4 +1,17 @@
 <view class="page-shell">
+  <view class="search-bar">
+    <text class="search-icon">🔍</text>
+    <input
+      class="search-input"
+      placeholder="搜索姓名或备注"
+      placeholder-class="search-placeholder"
+      value="{{keyword}}"
+      bindinput="onSearchInput"
+      confirm-type="search"
+    />
+    <view wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">✕</view>
+  </view>
+
   <view class="filter-row">
     <view
       wx:for="{{filterOptions}}"
@@ -12,7 +25,7 @@
   </view>
 
   <view wx:if="{{displayList.length === 0}}" class="card empty-card">
-    <view class="muted">这个分类下还没有生日记录。</view>
+    <view class="muted">{{keyword ? '没有找到匹配的生日记录。' : '这个分类下还没有生日记录。'}}</view>
   </view>
 
   <view

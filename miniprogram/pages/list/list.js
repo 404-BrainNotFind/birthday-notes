@@ -6,6 +6,7 @@ Page({
   data: {
     filterOptions,
     activeFilter: '全部',
+    keyword: '',
     allList: [],
     displayList: []
   },
@@ -17,25 +18,41 @@ Page({
   loadData() {
     const allList = store.getBirthdays()
     this.setData({ allList })
-    this.applyFilter(this.data.activeFilter, allList)
+    this.refreshDisplay()
   },
 
   selectFilter(event) {
     const { value } = event.currentTarget.dataset
-    this.setData({
-      activeFilter: value
-    })
-    this.applyFilter(value, this.data.allList)
+    this.setData({ activeFilter: value })
+    this.refreshDisplay()
   },
 
-  applyFilter(filter, list) {
-    const displayList = filter === '全部'
-      ? list
-      : list.filter((item) => item.relation === filter)
+  onSearchInput(event) {
+    this.setData({ keyword: event.detail.value })
+    this.refreshDisplay()
+  },
 
-    this.setData({
-      displayList
+  clearSearch() {
+    this.setData({ keyword: '' })
+    this.refreshDisplay()
+  },
+
+  refreshDisplay() {
+    const { allList, activeFilter, keyword } = this.data
+    const kw = keyword.trim().toLowerCase()
+    const displayList = allList.filter((item) => {
+      const matchFilter = activeFilter === '全部' || item.relation === activeFilter
+      if (!matchFilter) {
+        return false
+      }
+      if (!kw) {
+        return true
+      }
+      const name = (item.name || '').toLowerCase()
+      const note = (item.note || '').toLowerCase()
+      return name.indexOf(kw) !== -1 || note.indexOf(kw) !== -1
     })
+    this.setData({ displayList })
   },
 
   goDetail(event) {
