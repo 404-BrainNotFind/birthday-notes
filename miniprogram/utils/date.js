@@ -12,9 +12,9 @@ function formatDateText(date) {
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
 }
 
-function createBlessing(name) {
-  return `${name}，生日快乐！祝你新的一岁开心顺利，万事如意！`
-}
+// function createBlessing(name) {
+//   return `${name}，生日快乐！祝你新的一岁开心顺利，万事如意！`
+// }
 
 function getNextSolarBirthday(month, day, today) {
   today = today || new Date()
@@ -55,7 +55,7 @@ function enrichBirthday(item, today) {
   const birthdayText = isLunar
     ? lunar.formatLunarMonthDay(item.month, item.day)
     : `公历 ${formatMonthDay(item.month, item.day)}`
-  const blessingText = createBlessing(item.name)
+  // const blessingText = createBlessing(item.name)
   const nextDate = isLunar
     ? lunar.getNextLunarDate(item.month, item.day, false, today)
     : getNextSolarBirthday(item.month, item.day, today)
@@ -74,7 +74,7 @@ function enrichBirthday(item, today) {
     ...item,
     calendarType,
     birthdayText,
-    blessingText,
+    // blessingText,
     daysUntil,
     isToday: daysUntil === 0,
     isUpcoming: daysUntil > 0 && daysUntil <= item.remindDays,
@@ -119,7 +119,7 @@ function formatCreateTime(date) {
 }
 
 module.exports = {
-  createBlessing,
+  // createBlessing,
   enrichBirthday,
   formatCreateTime,
   formatDateText,

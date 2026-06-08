@@ -98,14 +98,6 @@ Page({
     wx.navigateTo({ url: `/pages/invite/invite?token=${token}` })
   },
 
-  copyInvitePath() {
-    const token = getOrCreateToken()
-    wx.setClipboardData({
-      data: `pages/invite/invite?token=${token}`,
-      success: () => wx.showToast({ title: '已复制邀请路径', icon: 'success' }),
-    })
-  },
-
   onShareAppMessage() {
     const token = getOrCreateToken()
     return {

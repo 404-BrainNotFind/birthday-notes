@@ -49,8 +49,11 @@
 
     <view class="card blessing-card">
       <view class="blessing-title section-title">祝福语</view>
-      <view class="blessing-text">{{record.blessingText}}</view>
-      <button class="btn-soft action-btn" bindtap="copyBlessing">复制祝福语</button>
+      <view class="blessing-text">{{blessingText}}</view>
+    </view>
+    <view class="action-row">
+      <button class="btn-soft action-half" bindtap="getNewBlessing">生成AI祝福语</button>
+      <button class="btn-soft action-half" bindtap="copyBlessing">复制祝福语</button>
     </view>
   </block>
 

@@ -2,6 +2,8 @@ const store = require('../../utils/birthday-service')
 
 const currentYear = new Date().getFullYear()
 const yearOptions = Array.from({ length: 11 }, (_, i) => currentYear - i)
+const defaultBlessingText = '祝你生日快乐！'
+const token = ''
 
 Page({
   data: {
@@ -12,6 +14,7 @@ Page({
     giftForm: { year: currentYear, yearIndex: 0, item: '', note: '' },
     showAddWish: false,
     wishForm: { item: '', note: '' },
+    blessingText: defaultBlessingText
   },
 
   onLoad(options) {
@@ -58,8 +61,13 @@ Page({
   },
 
   copyBlessing() {
+    const text = this.data.blessingText
+    if (!text) {
+      wx.showToast({ title: '暂无祝福语', icon: 'none' })
+      return
+    }
     wx.setClipboardData({
-      data: this.data.record.blessingText,
+      data: text,
       success() { wx.showToast({ title: '已复制', icon: 'success' }) }
     })
   },
@@ -153,6 +161,69 @@ Page({
           store.deleteWish(this.recordId, index)
           this.loadDetail()
         }
+      }
+    })
+  },
+
+  getNewBlessing() {
+    wx.showToast({
+      title: '生成中',
+      icon: 'loading',
+      duration: 300000,
+      mask: true
+    })
+    wx.request({
+      url: 'https://api.minimaxi.com/v1/responses',
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data: {
+        model: 'MiniMax-M3',
+        input: `# 角色
+        你是一名文案写手，擅长短文案。
+
+        # 任务
+        根据输入信息，写一条生日祝福语。
+
+        # 输入
+        - 生日日期：${this.data.record.birthdayText}
+        - 名字：${this.data.record.name}
+        - 关系：${this.data.record.relation}
+        - 备注：${this.data.record.note}
+
+        # 约束
+        - 严格不超过 50 个汉字（标点不计入）
+        - 必须自然融入全部输入信息
+        - 简洁、有记忆点，不要凑字
+
+        # 输出规则（重要）
+        - 直接输出祝福语正文，仅此一行
+        - 不要任何解释、前缀、推荐、备选方案
+        - 不要"好的""以下是"等开场白
+        - 不要表情符号（除非祝福语本身需要）
+        - 如果输入内容为空，则忽略输入，正常输出
+
+        # 示例
+        输入：名字=小明，生日=1月1号，关系=同事，备注=程序员
+        输出：程序员小明生日快乐，愿你的人生少写 if，多写 return。`
+      },
+      success: (res) => {
+        const text = res.data && res.data.output_text
+        wx.hideToast()
+        if (!text) {
+          wx.showToast({ title: '生成失败，请重试', icon: 'none', duration: 2000 })
+          console.error('返回数据缺少 output_text：', res.data)
+          return
+        }
+        this.setData({ blessingText: text })
+        wx.showToast({ title: '生成成功', icon: 'success' })
+      },
+      fail: (err) => {
+        wx.hideToast()
+        wx.showToast({ title: '生成失败，请重试', icon: 'error', duration: 2000 })
+        console.error('请求失败：', err)
       }
     })
   },
